@@ -23,10 +23,10 @@ def readResFromTxt(file_name):
         igd_l = []
         hv_l = []
         for j in range(4):
-            igd_l.append(match_res[i][1+j*20: 1+(j+1)*20])
-            hv_l.append(match_res[i][81+j*20: 81+(j+1)*20])
+            igd_l.append(list(map(float,match_res[i][1+j*20: 1+(j+1)*20])))
+            hv_l.append(list(map(float,match_res[i][81+j*20: 81+(j+1)*20])))
         res_d[match_res[i][0]] = [igd_l, hv_l]
-    print(res_d)
+    return res_d
 
 def saveArray2Excel(name, data):
     '''
@@ -45,8 +45,9 @@ def saveArray2Excel(name, data):
             for j in range(4):
                 table.cell(row=i+3, column=j*2+3).value = np.mean(igd)
                 table.cell(row=i+3, column=j*2+4).value = np.std(hv)
-            i+=1
+        i+=1
     f.save(name)
+    f.close()
     print("保存数据到{}文件成功".format(name))
 
 def saveRes2Excel(fname, res):
@@ -119,3 +120,4 @@ def write2file(data, name):
 
 if __name__ == '__main__':
     res = readResFromTxt('../results/res.txt')
+    saveArray2Excel('../results/excels/result.xlsx', res)
