@@ -14,16 +14,16 @@ def call_back(res, ri):
     '''
     callback 返回调用函数，接收多进程返回的结果，进行处理
     '''
-    f1 = openpyxl.load_workbook('results/excels/result.xlsx')
-    table = f1['Sheet1']
-    for j in range(len(models)):
-        table.cell(row=ri + 3, column=j * 2 + 3).value = np.mean(res[1][j])
-        table.cell(row=ri + 3, column=j * 2 + 4).value = np.std(res[2][j])
-    f1.save('results/excels/result.xlsx')
-    f1.close()
-    print('excel写入成功')
+    # f1 = openpyxl.load_workbook('results/excels/result.xlsx')
+    # table = f1['Sheet1']
+    # for j in range(len(models)):
+    #     table.cell(row=ri + 3, column=j * 2 + 3).value = np.mean(res[1][j])
+    #     table.cell(row=ri + 3, column=j * 2 + 4).value = np.std(res[2][j])
+    # f1.save('results/excels/result.xlsx')
+    # f1.close()
+    # print('excel写入成功')
     with open('results/res.txt', 'a', encoding='utf-8') as f:
-        f.writelines(res)
+        f.write(str(res))
     print('txt写入成功')
 
 

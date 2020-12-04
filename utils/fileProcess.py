@@ -36,15 +36,19 @@ def saveArray2Excel(name, data):
     :return:
     '''
     f = openpyxl.load_workbook(name)
-    table = f['Sheet1']
+    table1 = f['IGD']
+    table2 = f['HV']
     i = 0
     for proname in problems_name:
         value = data.get(proname)
         if value!=None:
             igd, hv = value
             for j in range(4):
-                table.cell(row=i+3, column=j*2+3).value = np.mean(igd)
-                table.cell(row=i+3, column=j*2+4).value = np.std(hv)
+                table1.cell(row=i+3, column=j*2+3).value = np.mean(igd[j])
+                table1.cell(row=i+3, column=j*2+4).value = np.std(igd[j])
+                table2.cell(row=i+3, column=j*2+3).value = np.mean(hv[j])
+                table2.cell(row=i+3, column=j*2+4).value = np.std(hv[j])
+
         i+=1
     f.save(name)
     f.close()
