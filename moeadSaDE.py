@@ -20,7 +20,7 @@ from utils.randomItem import *
 from utils.mutationProcess import *
 
 mps = [mp1, mp2, mp3]
-mps_n = [2, 4, 4]
+mps_n = [3, 5, 4]
 
 class MOEADSADE():
     def __init__(self, pf, problem):
@@ -53,8 +53,9 @@ class MOEADSADE():
         # 变异过程中用到的参数
         self.realb = 0.9 #从邻居还是全体成员之中选择交叉项的阈值
         self.mating_size = 2 #交叉杂交的个体数量
-        # self.rate = 0.5 #更新速度
+        # self.rate = 0.5 #更新速度,在SaDE中它是动态的，存于F变量中
         self.limit = 2#5  # 最多被替代更新的次数
+        self.CR = 0.5
 
         self.learning_period = 20 # 101* self.n_var # 学习周期
         self.ns = [] # success memory
@@ -248,7 +249,7 @@ class MOEADSADE():
         :param pop2:
         :return:
         '''
-        # idx_rnd = random.randint(0, self.n_var)
+        idx_rnd = random.randint(0, self.n_var)
         child = [-1 for i in range(self.n_var)]
         mps_i = self.strategy_k[cid]
         method = mps[mps_i]
@@ -256,7 +257,7 @@ class MOEADSADE():
 
         p = self.mating_selection(cid, mps_sn, type)
         for i in range(self.n_var):
-            xi = method(self.pop[cid].pop_x[i], self.F[cid], p, i)
+            xi = method(self.pop[cid].pop_x[i], self.F[cid], p, i, self.CR, idx_rnd)
             # xi1 = bpm1(xi1, self.lbound[i], self.rbound[i])#超越边界处理
             xi = bpm3(xi, self.lbound[i], self.rbound[i])#超越边界处理
             child[i] = xi

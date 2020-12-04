@@ -50,6 +50,7 @@ class MOEADDE():
         self.mating_size = 2 #交叉杂交的个体数量
         self.rate = 0.5 #更新速度
         self.limit = 2#5  # 最多被替代更新的次数
+        self.CR = 0.5
 
         # 问题的种群
         self.pop_size = 300  # 种群大小
@@ -161,8 +162,8 @@ class MOEADDE():
             type =1
             if random.random()>self.realb:
                 type = 2
-            p = self.mating_selection(n, 2, type)
-            child = self.diff_evo_xover2(n, p[0], p[1])
+            p = self.mating_selection(n, 3, type)
+            child = self.diff_evo_xover2(self.pop[n].pop_x, p[0], p[1], p[2])
             child = self.realmutation(child, 1.0/self.n_var)
             fit = self.update_reference(child)
             self.update_problem(child, n, type, fit)
@@ -181,7 +182,7 @@ class MOEADDE():
         else:
             return random.sample(self.pop, size)
 
-    def diff_evo_xover2(self, cid, pop1, pop2):
+    def diff_evo_xover2(self,pop, pop0, pop1, pop2):
         '''
         差分进化算子
         :param cid:
@@ -189,10 +190,12 @@ class MOEADDE():
         :param pop2:
         :return:
         '''
-        # idx_rnd = random.randint(0, self.n_var)
+        idx_rnd = random.randint(0, self.n_var)
         child = [-1 for i in range(self.n_var)]
         for i in range(self.n_var):
-            xi = self.pop[cid].pop_x[i] + self.rate*(pop2.pop_x[i]-pop1.pop_x[i])
+            xi = pop0.pop_x[i] + self.rate*(pop2.pop_x[i]-pop1.pop_x[i])
+            if not(random.random() < self.CR or i == idx_rnd):
+                xi = pop[i]
             if xi<self.lbound[i]:
                 xi = self.lbound[i] - random.random()*(xi-self.lbound[i])
             if xi>self.rbound[i]:

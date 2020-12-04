@@ -15,6 +15,7 @@ from utils.pfget import get_pflist
 from utils.igd import get_igd
 from utils.common import get_random_list,fitness_function
 from utils.boundaryProcess import *
+from utils.mutationProcess import mp1,mp2,mp3
 
 
 class MOEADCODE():
@@ -50,6 +51,7 @@ class MOEADCODE():
         self.mating_size = 2 #交叉杂交的个体数量
         self.rate = 0.5 #更新速度
         self.limit = 2#5  # 最多被替代更新的次数
+        self.CR = 0.5
 
         # 问题的种群
         self.pop_size = 300  # 种群大小
@@ -188,21 +190,19 @@ class MOEADCODE():
         :param pop2:
         :return:
         '''
-        # idx_rnd = random.randint(0, self.n_var)
+        idx_rnd = random.randint(0, self.n_var)
         child1 = [-1 for i in range(self.n_var)]
         child2 = [-1 for i in range(self.n_var)]
         child3 = [-1 for i in range(self.n_var)]
-        p1 = self.mating_selection(cid, 2, type)
-        p2 = self.mating_selection(cid, 4, type)
+        p1 = self.mating_selection(cid, 3, type)
+        p2 = self.mating_selection(cid, 5, type)
         p3 = self.mating_selection(cid, 3, type)
         for i in range(self.n_var):
-            xi1 = self.pop[cid].pop_x[i] + self.rate*(p1[0].pop_x[i]-p1[1].pop_x[i])
+            xi1 = mp1(self.pop[cid].pop_x[i], self.rate, p1, cid, self.CR, idx_rnd)
             xi1 = bpm1(xi1, self.lbound[i], self.rbound[i])#超越边界处理
-            xi2 = self.pop[cid].pop_x[i] + self.rate*(p2[0].pop_x[i]-p2[1].pop_x[i]) +\
-                  self.rate*(p2[2].pop_x[i]-p2[3].pop_x[i])
+            xi2 = mp2(self.pop[cid].pop_x[i], self.rate, p1, cid, self.CR, idx_rnd)
             xi2 = bpm1(xi2, self.lbound[i], self.rbound[i])
-            xi3 = self.pop[cid].pop_x[i] + random.random()*(p3[0].pop_x[i]-self.pop[cid].pop_x[i])+\
-                  self.rate*(p3[1].pop_x[i]-p3[2].pop_x[i])
+            xi3 = mp3(self.pop[cid].pop_x[i], self.rate, p1, cid, self.CR, idx_rnd)
             xi3 = bpm1(xi3, self.lbound[i], self.rbound[i])
             child1[i] = xi1
             child2[i] = xi2
