@@ -122,7 +122,7 @@ def problems_test2(nrun, draw, s2f=False):
     '''
     f1 = openpyxl.load_workbook('results/excels/result.xlsx')
     table = f1['Sheet1']
-    f2 = open('results/res.txt', 'w+', encoding='utf-8')
+    f2 = open('results/res1.txt', 'w+', encoding='utf-8')
     i = 0
     for id in range(7):
         print('DTLZ{} starting……'.format(id+1))
@@ -155,13 +155,48 @@ def problems_test2(nrun, draw, s2f=False):
         draw_box(igdss, f'WFG{id+1} IGD', f'results/photos/box/WFG{id+1}_IGD.png')
         i+=1
     f1.save('results/excels/result.xlsx')
+    f1.close()
     f2.close()
     print('程序结束')
 
 
+def problems_test3(nrun, draw=False, s2f=False):
+    '''
+    一系列函数问题的测试
+    :return:
+    '''
+    f2 = open('results/res1.txt', 'w+', encoding='utf-8')
+    i = 0
+    for id in range(7):
+        s = f'DTLZ{id+1}'
+        print('DTLZ{} starting……'.format(id+1))
+        pf = get_pflist(f'pf_files/n10000/DTLZ{id+1}.txt')
+        for j in range(len(models)):
+            igds, hvs = n_run(nrun, models[j], problems[id], pf, draw=draw, s2f=s2f)
+            s += str(igds)+str(hvs)+'''
+'''+'\n'
+        s += '\n'
+        print(s)
+        f2.write(s)
+        i+=1
+    for id in range(9):
+        s = f'WFG{id+1}'
+        print('WFG{} starting……'.format(id + 1))
+        pf = get_pflist(f"pf_files/wfg-pf/WFG{id+1}.3D.pf")
+        for j in range(len(models)):
+            igds, hvs = n_run(nrun, models[j], problems[id+7], pf, draw=draw, s2f=s2f)
+            s += str(igds) + str(hvs) + '''
+''' + '\n'
+        s += '\n'
+        print(s)
+        f2.write(s)
+        i+=1
+    f2.close()
+    print('程序结束')
+
 if __name__ == '__main__':
     # pf = get_pflist("pf_files/wfg-pf/WFG2.3D.pf")
-    pf = get_pflist('pf_files/n10000/{}.txt'.format('DTLZ6'))
+    # pf = get_pflist('pf_files/n10000/{}.txt'.format('DTLZ6'))
     # problem_test(MOEADCODE, DTLZ6, pf, draw=False, s2f=False)
     # igdss, hvss = problems_test(False, s2f=True)
     # problem_test(DTLZ4, s2f=False)
@@ -176,5 +211,5 @@ if __name__ == '__main__':
     # draw_box2(res)
     # print('运行结束')
 
-    # problems_test2(20, False, False)
+    problems_test3(1, False, False)
 

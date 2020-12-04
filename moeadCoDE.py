@@ -198,11 +198,11 @@ class MOEADCODE():
         p2 = self.mating_selection(cid, 5, type)
         p3 = self.mating_selection(cid, 3, type)
         for i in range(self.n_var):
-            xi1 = mp1(self.pop[cid].pop_x[i], self.rate, p1, cid, self.CR, idx_rnd)
+            xi1 = mp1(self.pop[cid].pop_x[i], self.rate, p1, i, self.CR, idx_rnd)
             xi1 = bpm1(xi1, self.lbound[i], self.rbound[i])#超越边界处理
-            xi2 = mp2(self.pop[cid].pop_x[i], self.rate, p1, cid, self.CR, idx_rnd)
+            xi2 = mp2(self.pop[cid].pop_x[i], self.rate, p2, i, self.CR, idx_rnd)
             xi2 = bpm1(xi2, self.lbound[i], self.rbound[i])
-            xi3 = mp3(self.pop[cid].pop_x[i], self.rate, p1, cid, self.CR, idx_rnd)
+            xi3 = mp3(self.pop[cid].pop_x[i], self.rate, p3, i, self.CR, idx_rnd)
             xi3 = bpm1(xi3, self.lbound[i], self.rbound[i])
             child1[i] = xi1
             child2[i] = xi2
