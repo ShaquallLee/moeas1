@@ -118,7 +118,12 @@ class MOEADSADE():
             sums = sum(s)
             if sums!=0:
                 for i in range(self.k):
-                    self.select_p[i] = float(s[i])/sums
+                    selectp = float(s[i])/sums
+                    if selectp < 0.05:  #控制避免某一个算子得到不竞争
+                        self.select_p[i] = 0.05
+                    else:
+                        self.select_p[i] =selectp
+
         for i in range(self.pop_size):
             self.strategy_k.append(random_getI(self.select_p))
 

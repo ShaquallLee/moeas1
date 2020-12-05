@@ -8,6 +8,7 @@ import random
 import math
 import time
 import matplotlib.pyplot as plt
+from utils.hypervolume import HyperVolume
 
 def get_random_list(size):
     '''
@@ -102,3 +103,18 @@ def draw_igd(distances, model):
     plt.ylabel("IGD")
     plt.savefig('./results/photos/igd/{}_{}.png'.format(model.problem.name(), time.time()))
     plt.show()
+
+
+def hv_count(model, reference_point):
+    '''
+    计算HV
+    '''
+    pop = []
+    for i in range(len(model.pop)):
+        f1 = fitness_function(model.pop[i].pop_fitness, model.pop[i].namda, model.ideal_fitness)
+        f2 = fitness_function(reference_point, model.pop[i].namda, model.ideal_fitness)
+        if f1 < f2:
+            pop.append(model.pop[i])
+    hv = HyperVolume(reference_point=reference_point)
+    hv_score = hv.compute(pop)
+    return hv_score

@@ -19,8 +19,7 @@ from utils.fileProcess import savePareto2Txt, readPareto4Txt, saveArray2Excel, s
 from utils.igd import get_igd
 from utils.pfget import get_pflist
 from utils.referencePoint import get_referencepoint
-from utils.common import extract_info,draw_scatter3D, draw_igd
-from utils.hypervolume import HyperVolume
+from utils.common import extract_info,draw_scatter3D, draw_igd, hv_count
 
 import wfg
 
@@ -61,9 +60,8 @@ def problem_test(MODEL, problem, pf, draw=True, s2f=False):
     model.execute()
     pops, x, y, z = extract_info(model)
     reference_point = get_referencepoint(pops)
-    hv = HyperVolume(reference_point=reference_point)
-    hv_score = hv.compute(model.pop)
     igd = get_igd(model.pareto_front, pops)  # 计算反世代距离IGD
+    hv_score = hv_count(model, reference_point)
     # print('hyper volume is {}'.format(hv_score))
     # print('inverted generational distance is {}'.format(igd))
     if draw:
