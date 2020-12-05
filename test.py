@@ -48,7 +48,7 @@ def problems_test(nrun, MODEL, draw, s2f=False):
         results[f'WFG{id + 1}'] = [igds, hvs]
     return results
 
-def problem_test(MODEL, problem, pf, draw=True, s2f=False):
+def problem_test(MODEL, problem, pf, reference_point, draw=True, s2f=False):
     '''
     单个问题测试
     :param problem:
@@ -59,7 +59,7 @@ def problem_test(MODEL, problem, pf, draw=True, s2f=False):
     model = MODEL(pf=pf, problem=problem)
     model.execute()
     pops, x, y, z = extract_info(model)
-    reference_point = get_referencepoint(pops)
+    # reference_point = get_referencepoint(pops)
     igd = get_igd(model.pareto_front, pops)  # 计算反世代距离IGD
     hv_score = hv_count(model, reference_point)
     # print('hyper volume is {}'.format(hv_score))
@@ -72,7 +72,7 @@ def problem_test(MODEL, problem, pf, draw=True, s2f=False):
     return hv_score, igd
 
 
-def n_run(n, MODEL, problem, pf, draw=False, s2f=False):
+def n_run(n, MODEL, problem, pf, reference_point, draw=False, s2f=False):
     '''
     运行n次
     :param n:
@@ -83,7 +83,7 @@ def n_run(n, MODEL, problem, pf, draw=False, s2f=False):
     hvs = []
     for i in range(n):
         print(f'第{i}次运行')
-        hv, igd = problem_test(MODEL, problem, pf, draw, s2f=s2f)
+        hv, igd = problem_test(MODEL, problem, pf, reference_point=reference_point, draw=draw, s2f=s2f)
         hvs.append(hv)
         igds.append(igd)
     # print("avgIGD={},minIGD={}\navgHV={},minHV={}".format(

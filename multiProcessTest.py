@@ -8,6 +8,7 @@ from config import *
 from test import n_run
 from utils.drawResults import draw_box
 from utils.pfget import get_pflist
+from utils.referencePoint import get_referencepoint
 
 
 def call_back(res, ri):
@@ -27,7 +28,7 @@ def call_back(res, ri):
     print('txt写入成功')
 
 
-def prog_cell(ri, pf, bm_name):
+def prog_cell(ri, pf, bm_name, reference_point):
     '''
     单个进程单元
     '''
@@ -36,7 +37,7 @@ def prog_cell(ri, pf, bm_name):
     igdss, hvss = [], []
     for j in range(len(models)):
         print(f'model{j} starting……')
-        igds, hvs = n_run(20, models[j], problems[ri], pf)
+        igds, hvs = n_run(20, models[j], problems[ri], pf, reference_point)
         igdss.append(igds)
         hvss.append(hvs)
     res.append(bm_name)
@@ -61,13 +62,14 @@ def run_multiprocess():
         else:
             problem_name = f'WFG{i-6}'
             pf = get_pflist(f"pf_files/wfg-pf/{problem_name}.3D.pf")
-        pool.apply_async(prog_cell, (i, pf, problem_name,), callback=call_back) #fei阻塞的
+        reference_point = get_referencepoint(pf)
+        pool.apply_async(prog_cell, (i, pf, problem_name, reference_point,), callback=call_back) #fei阻塞的
     pool.close()
     pool.join()  # 调用join之前，先调用close函数，否则会出错。执行完close后不会有新的进程加入到pool,join函数等待所有子进程结束
     print(f'运行结束,共用时{time.time()-start}')
 
 if __name__ == '__main__':
-    # run_multiprocess()
-    pf = get_pflist('pf_files/n10000/{}.txt'.format('DTLZ6'))
-    res, ri = prog_cell(5,pf,'DTLZ6')
-    call_back(res,5)
+    run_multiprocess()
+    # pf = get_pflist('pf_files/n10000/{}.txt'.format('DTLZ6'))
+    # res, ri = prog_cell(5,pf,'DTLZ6')
+    # call_back(res,5)
