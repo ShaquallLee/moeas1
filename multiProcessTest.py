@@ -40,7 +40,7 @@ def prog_cell(ri, pf, bm_name, reference_point):
     igdss, hvss = [], []
     for j in range(len(models)):
         print(f'model{j+1} starting……')
-        igds, hvs = n_run(1, models[j], problems[ri], pf, reference_point)
+        igds, hvs = n_run(20, models[j], problems[ri], pf, reference_point)
         igdss.append(igds)
         hvss.append(hvs)
     res.append(bm_name)
@@ -72,8 +72,8 @@ def run_multiprocess():
     print(f'运行结束,共用时{time.time()-start}')
 
 if __name__ == '__main__':
-    # run_multiprocess()
-    pf = get_pflist('pf_files/n10000/{}.txt'.format('DTLZ1'))
-    reference_point = get_referencepoint(pf)
-    res, ri = prog_cell(5,pf,'DTLZ1', reference_point)
-    call_back(res,5)
+    run_multiprocess()
+    # pf = get_pflist('pf_files/n10000/{}.txt'.format('DTLZ1'))
+    # reference_point = get_referencepoint(pf)
+    # res, ri = prog_cell(5,pf,'DTLZ1', reference_point)
+    # call_back(res,5)
