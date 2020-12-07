@@ -11,7 +11,7 @@ from utils.pfget import get_pflist
 from utils.referencePoint import get_referencepoint, get_referencepoint1, get_referencepoint2
 
 
-def call_back(res, ri):
+def call_back(res):
     '''
     callback 返回调用函数，接收多进程返回的结果，进行处理
     '''
@@ -40,7 +40,7 @@ def prog_cell(ri, pf, bm_name, reference_point):
     igdss, hvss = [], []
     for j in range(len(models)):
         print(f'model{j+1} starting……')
-        igds, hvs = n_run(1, models[j], problems[ri], pf, reference_point)
+        igds, hvs = n_run(20, models[j], problems[ri], pf, reference_point)
         igdss.append(igds)
         hvss.append(hvs)
     res.append(bm_name)

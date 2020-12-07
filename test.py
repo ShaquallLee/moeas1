@@ -77,10 +77,10 @@ def n_run(n, MODEL, problem, pf, reference_point, draw=False, s2f=False):
     hvs = []
     for i in range(n):
         print(f'第{i+1}次运行')
-        if i==0:
-            s2f=True
-        else:
-            s2f=False
+        # if i==0:
+        #     s2f=True
+        # else:
+        #     s2f=False
         hv, igd = problem_test(MODEL, problem, pf, reference_point=reference_point, draw=draw, s2f=s2f)
         hvs.append(hv)
         igds.append(igd)
