@@ -6,11 +6,11 @@
 # @desc: 实验测试MODE/D-DE算法及其改进
 import openpyxl
 import numpy as np
-from utils.benchmarks import *
-from moeadCoDE import MOEADCODE
-from moeaD import MOEAD
-from moeadSaDE import MOEADSADE
-from moeadde import MOEADDE
+# from utils.benchmarks import *
+# from moeadCoDE import MOEADCODE
+# from moeaD import MOEAD
+# from moeadSaDE import MOEADSADE
+# from moeadde import MOEADDE
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -21,13 +21,7 @@ from utils.pfget import get_pflist
 from utils.referencePoint import get_referencepoint
 from utils.common import extract_info,draw_scatter3D, draw_igd, hv_count
 
-import wfg
-
-models = [MOEAD, MOEADDE, MOEADSADE, MOEADCODE]
-models_name = ['MOEAD', 'MOEADDE', 'MOEADSADE', 'MOEADCODE']
-problems = [DTLZ1,DTLZ2,DTLZ3,DTLZ4,DTLZ5,DTLZ6,DTLZ7,
-            wfg.WFG1,wfg.WFG2,wfg.WFG3,wfg.WFG4,wfg.WFG5,wfg.WFG6,wfg.WFG7,wfg.WFG8,wfg.WFG9]
-# names = ['dtlz1','dtlz2','dtlz3','dtlz4','dtlz5','dtlz6','dtlz7']
+from config import *
 
 def problems_test(nrun, MODEL, draw, s2f=False):
     '''
@@ -68,7 +62,7 @@ def problem_test(MODEL, problem, pf, reference_point, draw=True, s2f=False):
         draw_scatter3D(model.pname, hv_score, igd, reference_point, x, y, z, model.pareto_front)
         # draw_igd(distances, model)
     if s2f:
-        savePareto2Txt(model.pname, pops)
+        savePareto2Txt(problems_name[problems.index(problem)], pops)
     return hv_score, igd
 
 
@@ -83,6 +77,10 @@ def n_run(n, MODEL, problem, pf, reference_point, draw=False, s2f=False):
     hvs = []
     for i in range(n):
         print(f'第{i+1}次运行')
+        if i==0:
+            s2f=True
+        else:
+            s2f=False
         hv, igd = problem_test(MODEL, problem, pf, reference_point=reference_point, draw=draw, s2f=s2f)
         hvs.append(hv)
         igds.append(igd)

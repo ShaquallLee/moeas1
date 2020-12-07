@@ -49,7 +49,6 @@ def saveArray2Excel(name, data):
                 table1.cell(row=i+3, column=j*2+4).value = np.std(igd[j])
                 table2.cell(row=i+3, column=j*2+3).value = np.mean(hv[j])
                 table2.cell(row=i+3, column=j*2+4).value = np.std(hv[j])
-
         i+=1
     f.save(name)
     f.close()
@@ -88,7 +87,7 @@ def savePareto2Txt(name,pareto):
     :param pareto:
     :return:
     '''
-    tname = './results/{}_res_{}.txt'.format(name, time.time())
+    tname = './results/pf/{}_res.txt'.format(name)
     with open(tname, 'w+', encoding='utf-8') as f:
         for items in pareto:
             if items!=[]:
