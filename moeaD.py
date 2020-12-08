@@ -31,7 +31,7 @@ class MOEAD():
         # 每次最大迭代的次数
         self.max_generation = 100
         # 每次最大计算fitness次数
-        self.max_count_fitness = 200000
+        self.max_count_fitness = 500000
         self.count_fitness = 0
         # 计算邻居个数
         self.max_neighborhood_size = 20

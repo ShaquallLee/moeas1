@@ -111,10 +111,23 @@ def hv_count(model, reference_point):
     '''
     pop = []
     for i in range(len(model.pop)):
-        f1 = fitness_function(model.pop[i].pop_fitness, model.pop[i].namda, model.ideal_fitness)
-        f2 = fitness_function(reference_point, model.pop[i].namda, model.ideal_fitness)
-        if f1 < f2:
+        if not pareto_dominate(reference_point, model.pop[i].pop_fitness):
             pop.append(model.pop[i])
     hv = HyperVolume(reference_point=reference_point)
     hv_score = hv.compute(pop)
     return hv_score
+
+def pareto_dominate(xa, xb):
+    '''
+    判断xa是否支配xb
+    '''
+    havemin = 0
+    for i in range(len(xa)):
+        if xa[i] < xb[i]:
+            havemin += 1
+        elif xa[i] > xb[i]:
+            return False
+    if havemin > 0:
+        return True
+    else:
+        return False

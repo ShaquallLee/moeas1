@@ -4,6 +4,8 @@
 # @file: test.py
 # @time: 2020/10/20 0020 18:59
 # @desc: 实验测试MODE/D-DE算法及其改进
+import math
+
 import openpyxl
 import numpy as np
 # from utils.benchmarks import *
@@ -18,7 +20,7 @@ from utils.drawResults import draw_box2, draw_box
 from utils.fileProcess import savePareto2Txt, readPareto4Txt, saveArray2Excel, saveRes2Excel, write2file
 from utils.igd import get_igd
 from utils.pfget import get_pflist
-from utils.referencePoint import get_referencepoint
+from utils.referencePoint import get_referencepoint, get_referencepoint2
 from utils.common import extract_info,draw_scatter3D, draw_igd, hv_count
 
 from config import *
@@ -191,13 +193,17 @@ def problems_test3(nrun, draw=False, s2f=False):
     print('程序结束')
 
 if __name__ == '__main__':
-    # pf = get_pflist("pf_files/wfg-pf/WFG2.3D.pf")
+    pf = get_pflist("pf_files/wfg-pf/WFG1.3D.pf")
     # pf = get_pflist('pf_files/n10000/{}.txt'.format('DTLZ6'))
+    reference_point = get_referencepoint2('WFG1')
     # problem_test(MOEADCODE, DTLZ6, pf, draw=False, s2f=False)
     # igdss, hvss = problems_test(False, s2f=True)
     # problem_test(DTLZ4, s2f=False)
-    # igds, hvs = n_run(5, MOEAD, DTLZ6, pf, False, s2f=False)
-    #
+    igds, hvs = n_run(20, MOEAD, problems[7], pf, reference_point, False, s2f=False)
+    print('igds(std, mean):',np.std(igds), np.mean(igds))
+    print('hvs(std, mean):',np.std(hvs), np.mean(hvs))
+    print(igds)
+    print(hvs)
     # res = problems_test(20, MOEAD, False, s2f=False)
     # saveRes2Excel("./results/excels/{}.xls".format('moea-d-sade'), res)
 
@@ -207,5 +213,5 @@ if __name__ == '__main__':
     # draw_box2(res)
     # print('运行结束')
 
-    problems_test3(1, False, False)
+    # problems_test3(1, False, False)
 

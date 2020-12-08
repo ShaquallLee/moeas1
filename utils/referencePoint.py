@@ -50,7 +50,7 @@ def get_referencepoint2(name):
     '''
     从文件中读取参考点
     '''
-    with open(f'../results/pf/{name}.txt', 'r', encoding='utf-8') as f:
+    with open(f'results/pf/{name}.txt', 'r', encoding='utf-8') as f:
         s = f.read()
         res = re.findall('\[([\d]+.[\d]*), ([\d]+.[\d]*), ([\d]+.[\d]*)]', s)
     return list(map(lambda x:float(x)*1.1, res[0]))
