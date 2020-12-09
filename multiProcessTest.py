@@ -65,7 +65,7 @@ def run_multiprocess():
         else:
             problem_name = f'WFG{i-6}'
             pf = get_pflist(f"pf_files/wfg-pf/{problem_name}.3D.pf")
-        reference_point = get_referencepoint2(problem_name)
+        reference_point = get_referencepoint(pf)
         pool.apply_async(prog_cell, (i, pf, problem_name, reference_point,), callback=call_back) #fei阻塞的
     pool.close()
     pool.join()  # 调用join之前，先调用close函数，否则会出错。执行完close后不会有新的进程加入到pool,join函数等待所有子进程结束

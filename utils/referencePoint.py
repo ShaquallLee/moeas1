@@ -34,11 +34,9 @@ def get_referencepoint1(pf, problem, name):
     for pfi in pf:
         minfit = float('inf')
         for i in range(len(problem.pop)):
-            f1 = fitness_function(problem.pop[i].pop_fitness, problem.pop[i].namda, problem.ideal_fitness)
-            f2 = fitness_function(pfi, problem.pop[i].namda, problem.ideal_fitness)
-            # print(f1, f2)
-            if f1< minfit+f2:
-                minfit = f1-f2
+            d = sum(list((np.array(pfi)-np.array(problem.pop[i].pop_fitness))**2))
+            if d< minfit:
+                minfit = d
         if minfit > maxfit:
             maxfit = minfit
             maxpoint = pfi
@@ -71,6 +69,23 @@ def count_referencepoint():
     pool.join()
     print('运行结束')
 
+def count_referencepoint11():
+    for i in range(len(problems)):
+        name = problems_name[i]
+        model = models[0](problem=problems[i])
+        model.execute()
+        if i<7:
+            pf = get_pflist(f'../pf_files/n10000/{name}.txt')
+        else:
+            pf = get_pflist(f"../pf_files/wfg-pf/{name}.3D.pf")
+        get_referencepoint1(pf, model, name)
+    print('运行结束')
+
 if __name__ == '__main__':
     # count_referencepoint()
-    get_referencepoint2('DTLZ2')
+    # get_referencepoint2('DTLZ2')
+    # pf = get_pflist(f"../pf_files/wfg-pf/WFG1.3D.pf")
+    # model = models[0](problem=problems[7])
+    # model.execute()
+    # get_referencepoint1(pf, model, 'WFG1')
+    count_referencepoint11()

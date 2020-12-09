@@ -111,7 +111,7 @@ def hv_count(model, reference_point):
     '''
     pop = []
     for i in range(len(model.pop)):
-        if not pareto_dominate(reference_point, model.pop[i].pop_fitness):
+        if pareto_dominate(model.pop[i].pop_fitness, reference_point):
             pop.append(model.pop[i])
     hv = HyperVolume(reference_point=reference_point)
     hv_score = hv.compute(pop)
