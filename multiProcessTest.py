@@ -57,7 +57,7 @@ def run_multiprocess():
     多进程主程序
     '''
     start = time.time()
-    pool = multiprocessing.Pool(processes=16)
+    pool = multiprocessing.Pool(processes=20)
     for i in range(len(problems)):
         if i<7:
             problem_name = f'DTLZ{i+1}'
