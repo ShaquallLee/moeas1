@@ -11,6 +11,7 @@ import numpy as np
 import copy
 import random
 
+from utils.common import draw_scatter3D
 from utils.countFit import evaluate
 from utils.individual import Individual as ind
 import matplotlib.pyplot as plt
@@ -307,11 +308,11 @@ def problem_test(problem):
     igd = get_igd(pf, pops) # 计算反世代距离IGD
     print('hyper volume is {}'.format(hv_score))
     print('inverted generational distance is {}'.format(igd))
-    draw_scatter3D(model.problem.name(), hv_score, igd, reference_point, x, y, z)
+    draw_scatter3D(model.problem.name(), hv_score, igd, reference_point, x, y, z, pf)
 
 
-def draw_scatter3D(pname, hv_score, igd, reference_point, x, y, z):
-    '''
+'''def draw_scatter3D(pname, hv_score, igd, reference_point, x, y, z):
+    '#''
     画3D散点图
     :param hv_score:
     :param igd:
@@ -319,7 +320,7 @@ def draw_scatter3D(pname, hv_score, igd, reference_point, x, y, z):
     :param y:
     :param z:
     :return:
-    '''
+    '#''
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     ax.scatter(x, y, z)
@@ -331,7 +332,7 @@ def draw_scatter3D(pname, hv_score, igd, reference_point, x, y, z):
     title = '{} pareto front\nHV:{}\nIGD:{}'.format(pname, hv_score, igd)
     ax.set_title(title)
     plt.show()
-
+'''
 
 def extract_info(model):
     '''
@@ -353,4 +354,4 @@ def extract_info(model):
 
 
 if __name__ == '__main__':
-    problem_test(DTLZ7)
+    problem_test(DTLZ1)

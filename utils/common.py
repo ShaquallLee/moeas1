@@ -71,9 +71,9 @@ def draw_scatter3D(pname, hv_score, igd, reference_point, x, y, z, pareto_front)
     '''
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
-    ax.scatter(x, y, z)
-    x_r, y_r, z_r = reference_point
-    ax.scatter(x_r, y_r, z_r, c='r')
+    ax.scatter(x, y, z,color='r')
+    # x_r, y_r, z_r = reference_point
+    # ax.scatter(x_r, y_r, z_r, c='r')
     x_p = []
     y_p = []
     z_p =[]
@@ -85,7 +85,7 @@ def draw_scatter3D(pname, hv_score, igd, reference_point, x, y, z, pareto_front)
     ax.set_xlabel('func1')
     ax.set_ylabel('func2')
     ax.set_zlabel('func3')
-    title = '{} pareto front\nHV:{}\nIGD:{}'.format(pname, hv_score, igd)
+    title = '{}'.format(pname)
     ax.set_title(title)
     plt.savefig('./results/photos/p/{}_s_{}.png'.format(pname, time.time()))
     # plt.show()

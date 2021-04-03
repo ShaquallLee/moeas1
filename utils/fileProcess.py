@@ -123,5 +123,5 @@ def write2file(data, name):
         print('保存结果到txt文件失败')
 
 if __name__ == '__main__':
-    res = readResFromTxt('../results/res.txt')
-    saveArray2Excel('../results/excels/result.xlsx', res)
+    res = readResFromTxt('../results1/res.txt')
+    saveArray2Excel('../results1/excels/result.xlsx', res)

@@ -10,7 +10,7 @@ import numpy as np
 import re
 
 from utils.common import fitness_function
-from config import *
+# from config import *
 from utils.pfget import get_pflist
 
 

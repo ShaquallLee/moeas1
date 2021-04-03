@@ -52,7 +52,7 @@ class MOEADSADE():
 
         # 变异过程中用到的参数
         self.realb = 0.9 #从邻居还是全体成员之中选择交叉项的阈值
-        self.mating_size = 2 #交叉杂交的个体数量
+        #self.mating_size = 2 #交叉杂交的个体数量
         # self.rate = 0.5 #更新速度,在SaDE中它是动态的，存于F变量中
         self.limit = 2#5  # 最多被替代更新的次数
         self.CR = 0.5

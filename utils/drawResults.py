@@ -8,6 +8,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import xlrd
+from utils.pfget import get_pflist
 
 def read_excel(fname):
     # 打开文件
@@ -54,6 +55,7 @@ def draw_box2(res):
         draw_box(hvs, name[i]+' HV')
         igds = [res[0][name[i]][1], res[1][name[i]][1], res[2][name[i]][1], res[3][name[i]][1]]
         draw_box(igds, name[i]+' IGD')
+
 
 
 if __name__ == '__main__':
